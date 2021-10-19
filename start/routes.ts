@@ -27,3 +27,7 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async ({ view }) => {
   return view.render('index')
 })
+
+Route.get('/table', async ({ view }) => {
+  return view.render('table')
+})

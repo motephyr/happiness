@@ -30,10 +30,9 @@ a {
 }
 
 main {
-  max-width: 620px;
+  max-width: 1020px;
   margin: auto;
-  height: 100vh;
-  padding: 0 30px;
+  padding: 30px 30px;
   align-items: center;
   display: flex;
   justify-content: center;

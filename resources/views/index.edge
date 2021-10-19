@@ -1,6 +1,104 @@
 @layout('layouts/master')
 @section('content')
-<main>
+<main id="app">
+  <div class="grid-container w-full">
+    <div class="grid-item">
+      <table class="border-separate border border-green-800 w-full">
+        <thead>
+          <tr>
+            <th class="border border-green-600">日期</th>
+            <th class="border border-green-600">9/17</th>
+            <th class="border border-green-600">9/16</th>
+            <th class="border border-green-600">9/15</th>
+            <th class="border border-green-600">9/14</th>
+            <th class="border border-green-600">9/13</th>
+            <th class="border border-green-600">9/12</th>
+            <th class="border border-green-600">9/11</th>
 
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="border border-green-600">完成回饋</td>
+            <td class="border border-green-600"></td>
+            <td class="border border-green-600">v</td>
+            <td class="border border-green-600">v</td>
+            <td class="border border-green-600">v</td>
+            <td class="border border-green-600">v</td>
+            <td class="border border-green-600">v</td>
+            <td class="border border-green-600">v</td>
+
+          </tr>
+          <tr>
+            <td class="border border-green-600">半夜活動事件數量</td>
+            <td class="border border-green-600"></td>
+            <td class="border border-green-600">8</td>
+            <td class="border border-green-600">6</td>
+            <td class="border border-green-600">7</td>
+            <td class="border border-green-600">6</td>
+            <td class="border border-green-600">5</td>
+            <td class="border border-green-600">9</td>
+
+          </tr>
+          <tr>
+            <td class="border border-green-600">時間最長事件</td>
+            <td class="border border-green-600"></td>
+            <td class="border border-green-600">12:03</td>
+            <td class="border border-green-600">8:06</td>
+            <td class="border border-green-600">7:48</td>
+            <td class="border border-green-600">7:20</td>
+            <td class="border border-green-600">2:21</td>
+            <td class="border border-green-600">3:09</td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-item">
+      <line-chart  :styles="myStyles"></line-chart>
+    </div>
+
+  </div>
 </main>
+
+<script>
+
+  Vue.component('line-chart', {
+    extends: VueChartJs.Line,
+    mounted() {
+      this.renderChart({
+        labels: ['9/16', '9/15', '9/14', '9/13', '9/12', '9/11'],
+        datasets: [
+          {
+            label: 'A',
+            fill: false,
+            data: [4, 9, 10, 40, 3, 80, 40]
+          },
+          {
+            label: 'B',
+            fill: false,
+            data: [40, 39, 10, 4, 39, 8, 40]
+          },
+          {
+            label: 'C',
+            fill: false,
+            data: [40, 3, 1, 40, 5, 20, 3]
+          }
+        ]
+      }, { responsive: true,maintainAspectRatio:false })
+    }
+
+  })
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      myStyles: {
+        height: '400px',
+        position: 'relative'
+      }
+    }
+  })
+
+</script>
 @endsection

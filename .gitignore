@@ -5,3 +5,18 @@ coverage
 .DS_STORE
 .env
 tmp
+
+public/uploads
+
+# Environment variables, never commit this file
+.env*
+nginx*
+
+# The development sqlite file
+database/*.sqlite
+
+# VSCode & Webstorm history directories
+.history
+.idea
+
+ecosystem.config.js
