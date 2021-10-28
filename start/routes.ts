@@ -31,3 +31,5 @@ Route.get('/', async ({ view }) => {
 Route.get('/table', async ({ view }) => {
   return view.render('table')
 })
+
+Route.resource('sources', 'SourcesController').apiOnly()
