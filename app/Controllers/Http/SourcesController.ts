@@ -3,12 +3,59 @@ import Source from 'App/Models/Source'
 import { schema } from '@ioc:Adonis/Core/Validator'
 
 export default class SourcesController {
+  /**
+* @swagger
+* /sources:
+*   get:
+*     tags:
+*       - Source
+*     summary: Source API lists
+*     responses:
+*       200:
+*         description: Source lists
+*/
   public async index({ response }) {
     const sources = await Source.all()
 
     return response.ok(sources)
   }
-
+  /**
+* @swagger
+* /sources:
+*   post:
+*     tags:
+*       - Source
+*     summary: Source API create
+ *     parameters:
+  *       - name: idstring
+  *         description: idstring
+  *         in: query
+  *         required: true
+  *         type: string
+   *       - name: timestring
+  *         description: timestring
+  *         in: query
+  *         required: true
+  *         type: string
+  *       - name: action
+  *         description: action
+  *         in: query
+  *         required: true
+  *         type: string
+  *       - name: category
+  *         description: category
+  *         in: query
+  *         required: true
+  *         type: string
+  *       - name: url
+  *         description: url
+  *         in: query
+  *         required: true
+  *         type: string
+*     responses:
+*       200:
+*         description: Source lists
+*/
   public async store({ request, response }) {
     const sourceSchema = schema.create({
       idstring: schema.string({ trim: true }),
