@@ -1,0 +1,110 @@
+@layout('layouts/master')
+@section('content')
+<main id="app">
+  <div class="flex flex-col">
+    <div>
+      本日為10/18日
+      <button
+        class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">重設本日資料</button>
+    </div>
+    <div>
+      <table class="border-separate border border-green-800">
+        <thead>
+          <tr>
+            <th class="border border-green-600">分組(一進一出為一組)</th>
+            <th class="border border-green-600">組別</th>
+            <th class="border border-green-600">日期</th>
+            <th class="border border-green-600">時間</th>
+            <th class="border border-green-600">進入空間影像</th>
+            <th class="border border-green-600">離開空間影像</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="data of myData">
+            <td class="border border-green-600">
+              <input type="checkbox" class="form-radio" name="checkbox" />
+            </td>
+            <td class="border border-green-600"></td>
+
+            <td class="border border-green-600">{{ "{{data.timestamp.toString().slice(0,8)}}" }}</td>
+            <td class="border border-green-600">{{ "{{data.timestamp.toString().slice(8,14)}}" }}</td>
+            <td class="border border-green-600">
+              <video controls v-if="data.action.includes('come')">
+                <source :src="data.url" type="video/mp4" />
+              </video>
+            </td>
+            <td class="border border-green-600">
+              <video controls v-if="data.action.includes('go')">
+                <source :src="data.url" type="video/mp4" />
+              </video>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      事件類別:
+        <input type="text" class="form-radio" name="text" value="半夜走動" />
+        <button
+        class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800">送出</button>
+
+    </div>
+
+  </div>
+</main>
+
+<script>
+
+  let app = new Vue({
+    el: '#app',
+    data: {
+      myData: [
+        {
+          "id": "id_f8:59:71:7a:35:b9_0",
+          "timestamp": 20210917003504,
+          "action": "come_bedroom1",
+          "url": "https://care-plus.s3-ap-northeast-1.amazonaws.com/id_f8:59:71:7a:35:b9/nano_eme_video/2021-09-17/2021-09-17_00:35:04.mp4",
+          "category": "半夜走動"
+        },
+        {
+          "id": "id_f8:59:71:7a:35:b9_0",
+          "timestamp": 20210917003509,
+          "action": "go_bedroom0",
+          "url": "https://care-plus.s3-ap-northeast-1.amazonaws.com/id_f8:59:71:7a:35:b9/nano_eme_video/2021-09-17/2021-09-17_00:35:09.mp4",
+          "category": ""
+        },
+        {
+          "id": "id_f8:59:71:7a:35:b9_0",
+          "timestamp": 20210917013225,
+          "action": "come_bedroom0",
+          "url": "https://care-plus.s3-ap-northeast-1.amazonaws.com/id_f8:59:71:7a:35:b9/nano_eme_video/2021-09-17/2021-09-17_01:32:25.mp4",
+          "category": "半夜走動"
+        },
+        {
+          "id": "id_f8:59:71:7a:35:b9_0",
+          "timestamp": 20210917013214,
+          "action": "go_bedroom0",
+          "url": "https://care-plus.s3-ap-northeast-1.amazonaws.com/id_f8:59:71:7a:35:b9/nano_eme_video/2021-09-17/2021-09-17_01:32:14.mp4",
+          "category": ""
+        },
+        {
+          "id": "id_f8:59:71:7a:35:b9_0",
+          "timestamp": 20210917014050,
+          "action": "come_bedroom0",
+          "url": "https://care-plus.s3-ap-northeast-1.amazonaws.com/id_f8:59:71:7a:35:b9/nano_eme_video/2021-09-17/2021-09-17_01:40:49.mp4",
+          "category": ""
+        },
+        {
+          "id": "id_f8:59:71:7a:35:b9_0",
+          "timestamp": 20210917013954,
+          "action": "go_bedroom0",
+          "url": "https://care-plus.s3-ap-northeast-1.amazonaws.com/id_f8:59:71:7a:35:b9/nano_eme_video/2021-09-17/2021-09-17_01:39:54.mp4",
+          "category": ""
+        },
+
+      ]
+    }
+  })
+
+</script>
+@endsection

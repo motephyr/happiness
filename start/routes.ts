@@ -28,8 +28,13 @@ Route.get('/', async ({ view }) => {
   return view.render('index')
 })
 
-Route.get('/table', async ({ view }) => {
-  return view.render('table')
+Route.get('/nurse', async ({ view }) => {
+  return view.render('nurse')
 })
+
+Route.get('/manage', async ({ view }) => {
+  return view.render('manage')
+})
+
 
 Route.resource('sources', 'SourcesController').apiOnly()
