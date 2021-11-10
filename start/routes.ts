@@ -24,16 +24,12 @@ import Route from '@ioc:Adonis/Core/Route'
 //   return view.render('welcome')
 // })
 
-Route.get('/', async ({ view }) => {
-  return view.render('index')
-})
+Route.get('/', 'IndicesController.index')
+
+Route.get('/manage/:datestring', 'ManagesController.manage')
 
 Route.get('/nurse', async ({ view }) => {
   return view.render('nurse')
-})
-
-Route.get('/manage', async ({ view }) => {
-  return view.render('manage')
 })
 
 Route.resource('sources', 'SourcesController').apiOnly()

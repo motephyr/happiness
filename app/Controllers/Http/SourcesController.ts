@@ -45,11 +45,6 @@ export default class SourcesController {
   *         in: query
   *         required: true
   *         type: string
-  *       - name: category
-  *         description: category
-  *         in: query
-  *         required: true
-  *         type: string
   *       - name: url
   *         description: url
   *         in: query
@@ -64,7 +59,6 @@ export default class SourcesController {
       idstring: schema.string({ trim: true }),
       timestring: schema.string({ trim: true }),
       action: schema.string({ trim: true }),
-      category: schema.string({ trim: true }),
       url: schema.string({ trim: true }),
     })
 
@@ -75,9 +69,9 @@ export default class SourcesController {
   }
 
   public async show({ params, response }) {
-    const { id }: { id: Number } = params
+    const { id }: { id: String } = params
 
-    const source: any = await Source.find(id)
+    const source: any = await Source.query().where({datestring: id})
     if (!source) {
       return response.notFound({ message: 'source not found' })
     }
@@ -89,7 +83,6 @@ export default class SourcesController {
       idstring: schema.string({ trim: true }),
       timestring: schema.string({ trim: true }),
       action: schema.string({ trim: true }),
-      category: schema.string({ trim: true }),
       url: schema.string({ trim: true }),
     })
 

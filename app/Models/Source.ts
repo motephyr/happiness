@@ -21,9 +21,6 @@ export default class Source extends BaseModel {
   public space: string
 
   @column()
-  public category: string
-
-  @column()
   public url: string
 
   @column.dateTime({ autoCreate: true })
