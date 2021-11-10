@@ -1,6 +1,9 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Source from 'App/Models/Source'
 import { schema } from '@ioc:Adonis/Core/Validator'
+import Application from '@ioc:Adonis/Core/Application'
+import ImportService from 'App/Services/ImportService'
+
 
 export default class SourcesController {
   /**
@@ -116,6 +119,18 @@ export default class SourcesController {
 
     await source.delete()
 
+    return response.ok({ message: 'source deleted successfully.' })
+  }
+
+  public async upload({ request, response }) {
+    const upload = request.file('upload')
+    let dir = 'upload/'
+
+    if (upload) {
+      await upload.move(Application.tmpPath(dir))
+    }
+
+    let send = await ImportService.ImportClassification('tmp/' + dir + upload.fileName)
     return response.ok({ message: 'source deleted successfully.' })
   }
 }

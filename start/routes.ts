@@ -36,5 +36,6 @@ Route.get('/manage', async ({ view }) => {
   return view.render('manage')
 })
 
-
 Route.resource('sources', 'SourcesController').apiOnly()
+
+Route.post('/sources/upload', 'SourcesController.upload')
