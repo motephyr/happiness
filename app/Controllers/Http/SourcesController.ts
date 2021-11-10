@@ -129,8 +129,7 @@ export default class SourcesController {
     if (upload) {
       await upload.move(Application.tmpPath(dir))
     }
-
     let send = await ImportService.ImportClassification('tmp/' + dir + upload.fileName)
-    return response.ok({ message: 'source deleted successfully.' })
+    return response.ok({ message: 'source upload successfully.' })
   }
 }

@@ -9,10 +9,16 @@ export default class Source extends BaseModel {
   public idstring: string
 
   @column()
+  public datestring: string
+
+  @column()
   public timestring: string
 
   @column()
   public action: string
+
+  @column()
+  public space: string
 
   @column()
   public category: string
