@@ -1,9 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import Group from 'App/Models/Group'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Source extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+
+  @column()
+  public groupId: number
+
+  @belongsTo(() => Group)
+  public group: BelongsTo<typeof Group>
 
   @column()
   public idstring: string

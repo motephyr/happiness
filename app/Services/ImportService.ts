@@ -1,12 +1,16 @@
 import Excel from 'exceljs'
 import Source from 'App/Models/Source'
+import Group from 'App/Models/Group'
 
 export default class ImportService {
   public static async ImportClassification(filelocation) {
+    Group.truncate(true)
+
+    Source.truncate(true)
     let workbook = new Excel.Workbook()
 
     workbook = await workbook.csv.readFile(filelocation)
-    Source.truncate()
+
     let today = new Date()
     let yyyy = today.getFullYear();
     let mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -17,13 +21,11 @@ export default class ImportService {
 
         if (values[3] !== -1) {
           let idstring = values[2] //get cell and the row
-          let datestring = yyyy+mm+dd
-          let timestring = values[4] || values[5] || values[6] || values[7]
-
-          let action = (values[4] || values[6]) ? 'come' : 'go'
-          let space = (values[4] || values[5]) ? '0' : '1'
-
-          let url = values[8]
+          let datestring = yyyy + mm + dd
+          let timestring = values[1]
+          let action = values[4] ? values[4] : values[7]
+          let space = values[5]
+          let url = values[6]
 
           //custom field name in database to variable
           let inputsource = {

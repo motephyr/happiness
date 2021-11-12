@@ -27,6 +27,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', 'IndicesController.index')
 
 Route.get('/manage/:datestring', 'ManagesController.manage')
+Route.post('/manage/createGroup', 'ManagesController.createGroup')
+
 
 Route.get('/nurse', async ({ view }) => {
   return view.render('nurse')

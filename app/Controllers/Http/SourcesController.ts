@@ -71,7 +71,7 @@ export default class SourcesController {
   public async show({ params, response }) {
     const { id }: { id: String } = params
 
-    const source: any = await Source.query().where({datestring: id})
+    const source: any = await Source.query().where({datestring: id}).orderBy('timestring')
     if (!source) {
       return response.notFound({ message: 'source not found' })
     }
