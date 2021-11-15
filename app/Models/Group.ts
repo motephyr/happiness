@@ -7,13 +7,16 @@ export default class Group extends BaseModel {
   public id: number
 
   @hasMany(() => Source)
-  public groups: HasMany<typeof Source>
+  public sources: HasMany<typeof Source>
 
   @column()
   public remark: string
 
   @column()
   public name: string
+
+  @column()
+  public datestring: string
 
   @column()
   public duringtime: string

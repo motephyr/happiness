@@ -27,13 +27,15 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', 'IndicesController.index')
 
 Route.get('/manage/:datestring', 'ManagesController.manage')
-Route.post('/manage/createGroup', 'ManagesController.createGroup')
+Route.post('/manage/:datestring/createGroup', 'ManagesController.createGroup')
+Route.post('/manage/:datestring/resetData', 'ManagesController.resetData')
 
-
-Route.get('/nurse', async ({ view }) => {
-  return view.render('nurse')
-})
+Route.get('/nurse/:datestring', 'NursesController.nurse')
+Route.post('/nurse/:datestring/groups/:group_id', 'NursesController.changeName')
 
 Route.resource('sources', 'SourcesController').apiOnly()
 
 Route.post('/sources/upload', 'SourcesController.upload')
+
+Route.resource('groups', 'GroupsController').apiOnly()
+

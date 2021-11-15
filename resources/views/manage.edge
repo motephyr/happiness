@@ -1,12 +1,14 @@
 @layout('layouts/master')
 @section('content')
 <main id="app">
-  <form method="POST" action="/manage/createGroup">
+  <form method="POST" action="/manage/{{params.datestring}}/createGroup">
     <div class="flex flex-col">
       <div>
         本日為{{params.datestring}}
-        <button
-          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">重設本日資料</button>
+        <a @click="resetData()"
+          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">
+          重設本日資料
+      </a>
       </div>
       <div>
         <table class="border-separate border border-green-800">
@@ -23,7 +25,7 @@
           <tbody>
             <tr v-for="data of myData" v-if="myData">
               <td class="border border-green-600">
-                <input type="checkbox" class="form-radio" name="sourceId" :value="data.id" />
+                <input type="checkbox" class="form-radio" name="sourceId" :value="data.id" :disabled="data.group_id" />
               </td>
               <td class="border border-green-600">{{ "{{data.group_id}}" }}</td>
 
@@ -45,7 +47,7 @@
       </div>
       <div>
         事件類別:
-        <input type="text" class="form-radio" name="remark" value="半夜走動" />
+        <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="remark" value="半夜走動" />
         <input type="submit" value="送出"
           class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />
 
@@ -61,12 +63,17 @@
     el: '#app',
     async mounted() {
       let response = await axios.get('/sources/{{params.datestring}}')
-      console.log(response.data)
       this.myData = response.data
     },
     data() {
       return {
         myData: []
+      }
+    },
+    methods: {
+      async resetData() {
+        let response = await axios.post('/manage/{{params.datestring}}/resetData')
+        location.reload()
       }
     }
   })
