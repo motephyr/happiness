@@ -8,7 +8,7 @@
         <a @click="resetData()"
           class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">
           重設本日資料
-      </a>
+        </a>
       </div>
       <div>
         <table class="border-separate border border-green-800">
@@ -47,7 +47,9 @@
       </div>
       <div>
         事件類別:
-        <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="remark" value="半夜走動" />
+        <input type="text"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          name="remark" value="半夜走動" />
         <input type="submit" value="送出"
           class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />
 
@@ -63,7 +65,18 @@
     el: '#app',
     async mounted() {
       let response = await axios.get('/sources/{{params.datestring}}')
-      this.myData = response.data
+      this.myData = response.data.map((x) => {
+        const date = new Date(Number(x.timestring) * 1000);
+        const hours = "0" + date.getHours();
+        const minutes = "0" + date.getMinutes();
+        const seconds = "0" + date.getSeconds();
+
+        // Will display time in 10:30:23 format
+        x.timestring = `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()} `
+        + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+        return x
+      })
     },
     data() {
       return {

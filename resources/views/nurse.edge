@@ -1,51 +1,58 @@
 @layout('layouts/master')
 @section('content')
 <main id="app">
-  <table class="border-separate border border-green-800">
-    <thead>
-      <tr>
-        <th class="border border-green-600">日期</th>
-        <th class="border border-green-600">時間</th>
-        <th class="border border-green-600">進入空間影像</th>
-        <th class="border border-green-600">離開空間影像</th>
-        <th class="border border-green-600 w-1/6">事件分類</th>
-        <th class="border border-green-600">護理師回報</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="data of myData">
-        <td class="border border-green-600" >{{ "{{data.datestring }}" }}</td>
-        <td class="border border-green-600" >{{ "{{data.sources[0].timestring }}" }}
-          {{ "{{data.sources[1].timestring }}" }}</td>
+  <div class="flex flex-col">
+    <div>
+      本日為{{params.datestring}}
+    </div>
+    <div>
+      <table class="border-separate border border-green-800">
+        <thead>
+          <tr>
+            <th class="border border-green-600">日期</th>
+            <th class="border border-green-600">時間</th>
+            <th class="border border-green-600">進入空間影像</th>
+            <th class="border border-green-600">離開空間影像</th>
+            <th class="border border-green-600 w-1/6">事件分類</th>
+            <th class="border border-green-600">護理師回報</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="data of myData">
+            <td class="border border-green-600">{{ "{{data.datestring }}" }}</td>
+            <td class="border border-green-600">{{ "{{data.sources[0].timestring }}" }}
+              {{ "{{data.sources[1].timestring }}" }}</td>
 
-        <td class="border border-green-600">
-          <video controls preload="false">
-            <source :src="data.sources[0].url" type="video/mp4" />
-          </video>
-        </td>
-        <td class="border border-green-600">
-          <video controls preload="false">
-            <source :src="data.sources[1].url" type="video/mp4" />
-          </video>
-        </td>
-        <td class="border border-green-600" v-if="data.duringtime">
-          {{ "{{data.remark}}" }}
-          <br />
-          活動時間: {{"{{data.duringtime}}"}}秒         
-        </td>
-        <td class="border border-green-600">
-          <form method="POST" :action=`/nurse/{{params.datestring}}/groups/${data.id}`>
+            <td class="border border-green-600">
+              <video controls preload="false">
+                <source :src="data.sources[0].url" type="video/mp4" />
+              </video>
+            </td>
+            <td class="border border-green-600">
+              <video controls preload="false">
+                <source :src="data.sources[1].url" type="video/mp4" />
+              </video>
+            </td>
+            <td class="border border-green-600" v-if="data.duringtime">
+              {{ "{{data.remark}}" }}
+              <br />
+              活動時間: {{"{{data.duringtime}}"}}秒
+            </td>
+            <td class="border border-green-600">
+              <form method="POST" :action=`/nurse/{{params.datestring}}/groups/${data.id}`>
 
-            姓名∶<input type="text"
-              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="name" :value="data.name" />
-            <input type="submit" value="修改"
-              class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />
-          </form>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+                姓名∶<input type="text"
+                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  name="name" :value="data.name" />
+                <input type="submit" value="修改"
+                  class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </main>
 
 <script>
@@ -53,7 +60,22 @@
     el: '#app',
     async mounted() {
       let response = await axios.get('/groups/{{params.datestring}}')
-      this.myData = response.data
+      this.myData = response.data.map((y) => {
+        y.sources = y.sources.map((x) => {
+          const date = new Date(Number(x.timestring) * 1000);
+          const hours = "0" + date.getHours();
+          const minutes = "0" + date.getMinutes();
+          const seconds = "0" + date.getSeconds();
+
+          // Will display time in 10:30:23 format
+          x.timestring = `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()} `
+            + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+          return x
+        })
+        return y
+      })
+
     },
     data() {
       return {
