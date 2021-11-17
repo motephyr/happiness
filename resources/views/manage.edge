@@ -16,7 +16,6 @@
             <tr>
               <th class="border border-green-600">分組(一進一出為一組)</th>
               <th class="border border-green-600">組別</th>
-              <th class="border border-green-600">日期</th>
               <th class="border border-green-600">時間</th>
               <th class="border border-green-600">進入空間影像</th>
               <th class="border border-green-600">離開空間影像</th>
@@ -29,18 +28,20 @@
               </td>
               <td class="border border-green-600">{{ "{{data.group_id}}" }}</td>
 
-              <td class="border border-green-600">{{ "{{data.datestring}}" }}</td>
               <td class="border border-green-600">{{ "{{data.timestring}}" }}</td>
-              <td class="border border-green-600">
+              <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
                 <video controls v-if="data.action.includes('come')" preload="false">
                   <source :src="data.url" type="video/mp4" />
                 </video>
               </td>
-              <td class="border border-green-600">
+              <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
                 <video controls v-if="data.action.includes('go')" preload="false">
                   <source :src="data.url" type="video/mp4" />
                 </video>
               </td>
+              <td class="border border-green-600" v-else colspan="2">
+                {{ "{{data.action}}" }}
+             </td>
             </tr>
           </tbody>
         </table>
