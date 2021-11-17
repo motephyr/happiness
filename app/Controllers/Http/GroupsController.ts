@@ -1,9 +1,6 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Group from 'App/Models/Group'
 import { schema } from '@ioc:Adonis/Core/Validator'
-import Application from '@ioc:Adonis/Core/Application'
-import ImportService from 'App/Services/ImportService'
-
 
 export default class GroupsController {
   /**
@@ -112,16 +109,5 @@ export default class GroupsController {
     await group.delete()
 
     return response.ok({ message: 'group deleted successfully.' })
-  }
-
-  public async upload({ request, response }) {
-    const upload = request.file('upload')
-    let dir = 'upload/'
-
-    if (upload) {
-      await upload.move(Application.tmpPath(dir))
-    }
-    await ImportService.ImportClassification('tmp/' + dir + upload.fileName)
-    return response.ok({ message: 'group upload successfully.' })
   }
 }
