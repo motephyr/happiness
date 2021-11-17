@@ -4,7 +4,7 @@ import Group from 'App/Models/Group'
 
 export default class NursesController {
 
-  public async nurse({ request, view, params }) {
+  public async nurse({ view, params }) {
     return view.render('nurse', { params })
   }
 

@@ -7,9 +7,9 @@ export default class ImportService {
     Group.truncate(true)
 
     Source.truncate(true)
-    let workbook = new Excel.Workbook()
+    let newworkbook = new Excel.Workbook()
 
-    workbook = await workbook.csv.readFile(filelocation)
+    let workbook = await newworkbook.csv.readFile(filelocation)
 
     let today = new Date()
     let yyyy = today.getFullYear();
