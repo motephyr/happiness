@@ -7,31 +7,35 @@
         <thead>
           <tr>
             <th class="border border-green-600">日期</th>
-            @each(source in sources)
+            @each(datestring in datestrings)
             <th class="border border-green-600">
-              <a href="/manage/{{source.datestring}}">{{source.datestring}}</a></th>
+              <a href="/manage/{{datestring}}">{{datestring}}</a>
+            </th>
             @end
-     
+
 
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="border border-green-600">半夜活動事件數量</td>
-            <td class="border border-green-600"></td>
-            <td class="border border-green-600">8</td>
-
+            @each(time in times)
+            <td class="border border-green-600">{{time}}</td>
+            @end
           </tr>
           <tr>
             <td class="border border-green-600">時間最長事件</td>
-            <td class="border border-green-600"></td>
-            <td class="border border-green-600">12:03</td>
+            @each(longesttime in longesttimes)
+
+            <td class="border border-green-600">{{longesttime}}</td>
+            @end
+
           </tr>
         </tbody>
       </table>
     </div>
     <div class="grid-item">
-      <line-chart  :styles="myStyles"></line-chart>
+      <line-chart :styles="myStyles"></line-chart>
     </div>
 
   </div>
@@ -43,25 +47,30 @@
     extends: VueChartJs.Line,
     mounted() {
       this.renderChart({
-        labels: ['9/16', '9/15', '9/14', '9/13', '9/12', '9/11'],
-        datasets: [
-          {
-            label: 'A',
-            fill: false,
-            data: [4, 9, 10, 40, 3, 80, 40]
-          },
-          {
-            label: 'B',
-            fill: false,
-            data: [40, 39, 10, 4, 39, 8, 40]
-          },
-          {
-            label: 'C',
-            fill: false,
-            data: [40, 3, 1, 40, 5, 20, 3]
-          }
+        labels: [ 
+        @each(datestring in datestrings)
+          '{{ datestring }}',
+        @end
         ]
-      }, { responsive: true,maintainAspectRatio:false })
+        ,
+      datasets: [
+        {
+          label: 'A',
+          fill: false,
+          data: [4, 9, 10, 40, 3, 80, 40]
+        },
+        {
+          label: 'B',
+          fill: false,
+          data: [40, 39, 10, 4, 39, 8, 40]
+        },
+        {
+          label: 'C',
+          fill: false,
+          data: [40, 3, 1, 40, 5, 20, 3]
+        }
+      ]
+    }, { responsive: true, maintainAspectRatio: false })
     }
 
   })
