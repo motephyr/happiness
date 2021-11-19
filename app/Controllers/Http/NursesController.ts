@@ -5,7 +5,7 @@ import Group from 'App/Models/Group'
 export default class NursesController {
 
   public async nurse({ view, params }) {
-    return view.render('nurse', { params })
+    return view.render('nurse/nurse', { params })
   }
 
   public async changeName({ request, params, response }) {
@@ -27,4 +27,8 @@ export default class NursesController {
     return response.redirect().back()
   }
 
+}
+
+function onlyUnique(value, index, self) {
+  return self.indexOf(value) === index;
 }

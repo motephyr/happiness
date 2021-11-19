@@ -5,7 +5,7 @@ import Group from 'App/Models/Group'
 
 export default class ManagesController {
   public async manage({ view, params }) {
-    return view.render('manage', { params })
+    return view.render('manage/manage', { params })
   }
 
   public async createGroup({ request, response, params }) {

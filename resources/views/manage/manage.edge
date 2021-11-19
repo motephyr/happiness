@@ -1,0 +1,96 @@
+@layout('layouts/master')
+@section('content')
+<main id="app">
+  <form method="POST" action="/manage/{{params.datestring}}/createGroup">
+    <div class="flex flex-col">
+      <div>
+        本日為{{params.datestring}}
+        <a @click="resetData()"
+          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">
+          重設本日資料
+        </a>
+      </div>
+      <div>
+        <table class="border-separate border border-green-800">
+          <thead>
+            <tr>
+              <th class="border border-green-600">分組(一進一出為一組)</th>
+              <th class="border border-green-600">組別</th>
+              <th class="border border-green-600">時間</th>
+              <th class="border border-green-600">進入空間影像</th>
+              <th class="border border-green-600">離開空間影像</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="data of myData" v-if="myData">
+              <td class="border border-green-600">
+                <input type="checkbox" class="form-radio" name="sourceId" :value="data.id" :disabled="data.group_id" />
+              </td>
+              <td class="border border-green-600">{{ "{{data.group_id}}" }}</td>
+
+              <td class="border border-green-600">{{ "{{data.timestring}}" }}</td>
+              <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
+                <video controls v-if="data.action.includes('come')" preload="false">
+                  <source :src="data.url" type="video/mp4" />
+                </video>
+              </td>
+              <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
+                <video controls v-if="data.action.includes('go')" preload="false">
+                  <source :src="data.url" type="video/mp4" />
+                </video>
+              </td>
+              <td class="border border-green-600" v-else colspan="2">
+                {{ "{{data.action}}" }}
+             </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        事件類別:
+        <input type="text"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          name="remark" value="半夜走動" />
+        <input type="submit" value="送出"
+          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />
+
+      </div>
+
+    </div>
+  </form>
+</main>
+
+<script>
+
+  let app = new Vue({
+    el: '#app',
+    async mounted() {
+      let response = await axios.get('/sources/{{params.datestring}}')
+      this.myData = response.data.map((x) => {
+        const date = new Date(Number(x.timestring) * 1000);
+        const hours = "0" + date.getHours();
+        const minutes = "0" + date.getMinutes();
+        const seconds = "0" + date.getSeconds();
+
+        // Will display time in 10:30:23 format
+        x.timestring = `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()} `
+        + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+        return x
+      })
+    },
+    data() {
+      return {
+        myData: []
+      }
+    },
+    methods: {
+      async resetData() {
+        let response = await axios.post('/manage/{{params.datestring}}/resetData')
+        location.reload()
+      }
+    }
+  })
+
+</script>
+@endsection
