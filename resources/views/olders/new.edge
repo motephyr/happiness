@@ -1,0 +1,72 @@
+@layout('layouts/master')
+
+@section('content')
+<div>
+  <form action="/olders/" method="POST" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+        姓名
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        name="name" type="text" placeholder="Username">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="room">
+        房間
+      </label>
+      <input
+        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        name="room" type="text">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="birthday">
+        生日
+      </label>
+      <input
+        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        name="birthday" type="text">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="medicalrecord">
+        病史
+      </label>
+      <input
+        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        name="medicalrecord" type="text">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="medicine">
+        用藥紀錄
+      </label>
+      <input
+        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        name="medicine" type="text">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="notice">
+        注意事項
+      </label>
+      <input
+        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        name="notice" type="text">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="pictureurl">
+        圖片網址
+      </label>
+      <input
+        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+        name="pictureurl" type="text">
+    </div>
+    <div class="flex items-center justify-between">
+      <button
+        class="hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit">
+        送出
+      </button>
+    </div>
+  </form>
+</div>
+@endsection

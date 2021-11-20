@@ -36,9 +36,16 @@ Route.get('/manage/:datestring', 'ManagesController.manage')
 Route.post('/manage/:datestring/createGroup', 'ManagesController.createGroup')
 Route.post('/manage/:datestring/resetData', 'ManagesController.resetData')
 
+Route.group(() => {
+  Route.get('/new', 'OldersController.create')
+  Route.get('/:id/edit', 'OldersController.edit')
+  Route.patch('/:id', 'OldersController.update')
+  Route.post('/', 'OldersController.store')
+  Route.get('/:id', 'OldersController.show')
+  Route.get('/', 'OldersController.index')
+}).prefix('olders')
+
 
 Route.resource('groups', 'GroupsController').apiOnly()
 Route.resource('sources', 'SourcesController').apiOnly()
-
 Route.post('/sources/upload', 'SourcesController.upload')
-

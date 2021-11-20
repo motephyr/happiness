@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, hasMany, HasMany, BelongsTo, belongsTo } from '@ioc:Adonis/Lucid/Orm'
 import Source from 'App/Models/Source'
+import Older from 'App/Models/Older'
+
 
 export default class Group extends BaseModel {
   @column({ isPrimary: true })
@@ -8,6 +10,9 @@ export default class Group extends BaseModel {
 
   @hasMany(() => Source)
   public sources: HasMany<typeof Source>
+
+  @belongsTo(() => Older)
+  public older: BelongsTo<typeof Older>
 
   @column()
   public remark: string
