@@ -45,9 +45,13 @@
             <td class="border border-green-600">
               <form method="POST" :action=`/nurse/{{params.datestring}}/groups/${data.id}`>
 
-                姓名∶<input type="text"
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  name="name" :value="data.name" />
+                姓名∶
+                  <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="older_id">
+                    <option value="">未設定</option>
+                    @each(older in olders)
+                    <option value="{{older.id}}" :selected="data.older_id == {{older.id}}">{{older.name}}</option>
+                    @end
+                  </select>
                 <input type="submit" value="修改"
                   class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />
               </form>

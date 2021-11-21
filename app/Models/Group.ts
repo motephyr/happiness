@@ -11,6 +11,9 @@ export default class Group extends BaseModel {
   @hasMany(() => Source)
   public sources: HasMany<typeof Source>
 
+  @column()
+  public olderId: number
+
   @belongsTo(() => Older)
   public older: BelongsTo<typeof Older>
 

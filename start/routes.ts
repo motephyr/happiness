@@ -30,7 +30,7 @@ Route.get('/nurse', 'IndicesController.nurse')
 Route.get('/manage', 'IndicesController.manage')
 
 Route.get('/nurse/:datestring', 'NursesController.nurse')
-Route.post('/nurse/:datestring/groups/:group_id', 'NursesController.changeName')
+Route.post('/nurse/:datestring/groups/:group_id', 'NursesController.setOlderId')
 
 Route.get('/manage/:datestring', 'ManagesController.manage')
 Route.post('/manage/:datestring/createGroup', 'ManagesController.createGroup')
