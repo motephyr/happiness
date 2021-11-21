@@ -1,11 +1,14 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { schema } from '@ioc:Adonis/Core/Validator'
 import Group from 'App/Models/Group'
+import Older from 'App/Models/Older'
 
 export default class NursesController {
 
   public async nurse({ view, params }) {
-    return view.render('nurse/nurse', { params })
+    const olders = await Older.all()
+  
+    return view.render('nurse/nurse', { params, olders })
   }
 
   public async changeName({ request, params, response }) {

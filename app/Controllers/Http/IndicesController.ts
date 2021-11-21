@@ -1,5 +1,6 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Group from 'App/Models/Group'
+import Source from 'App/Models/Source'
 
 export default class IndicesController {
   public async index({ view }) {
@@ -78,25 +79,19 @@ export default class IndicesController {
 
   public async manage({ view }) {
 
-    let groupsquery = await Group.query()
-    let groups = groupsquery.map((group) => group.serialize())
+    let sourcesquery = await Source.query()
+    let sources = sourcesquery.map((group) => group.serialize())
     // usage example:
-    let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
+    let datestrings = sources.map((x) => (x.datestring)).filter(onlyUnique);
     let times = datestrings.map((x) => {
-      return groups.filter((y) => {
+      return sources.filter((y) => {
         return x === y.datestring
       }).length
     })
 
-    let longesttimes = datestrings.map((x) => {
-      let duringtimes = groups
-        .filter((y) => {
-          return x === y.datestring
-        }).map((z) => parseInt(z.duringtime))
-      return Math.max(...duringtimes)
-    })
 
-    let result = { datestrings, times, longesttimes }
+
+    let result = { datestrings, times }
 
     return view.render('manage', result)
   }
