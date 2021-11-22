@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Older from 'App/Models/Older'
+import Group from 'App/Models/Group'
+
 // import { schema } from '@ioc:Adonis/Core/Validator'
 
 export default class OldersController {
@@ -30,7 +32,11 @@ export default class OldersController {
 
   public async show(ctx: HttpContextContract) {
     const older = await Older.findBy('id', ctx.params.id)
-    return ctx.view.render('olders/_id', { older })
+    const groups = await Group.query().where({ older_id: ctx.params.id })
+      .preload('sources', (q) => {
+        q.orderBy('timestring')
+      })
+    return ctx.view.render('olders/_id', { older, groups })
   }
 
   public async edit({ view, params }: HttpContextContract) {
