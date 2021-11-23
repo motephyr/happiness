@@ -30,13 +30,14 @@ export default class OldersController {
     return response.redirect(`/olders/${older.id}`)
   }
 
-  public async show(ctx: HttpContextContract) {
-    const older = await Older.findBy('id', ctx.params.id)
-    const groups = await Group.query().where({ older_id: ctx.params.id })
+  public async show({ view, params }) {
+    const older = await Older.findBy('id', params.id)
+    const groups = await Group.query().where({ older_id: params.id })
       .preload('sources', (q) => {
         q.orderBy('timestring')
       })
-    return ctx.view.render('olders/_id', { older, groups })
+
+    return view.render('olders/_id', { older, groups })
   }
 
   public async edit({ view, params }: HttpContextContract) {
