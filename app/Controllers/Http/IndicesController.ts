@@ -5,7 +5,7 @@ import Source from 'App/Models/Source'
 export default class IndicesController {
   public async index({ view }) {
 
-    let groupsquery = await Group.query()
+    let groupsquery = await Group.query().orderBy('datestring')
     let groups = groupsquery.map((group) => group.serialize())
     // usage example:
     let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
@@ -30,7 +30,7 @@ export default class IndicesController {
 
   public async list({ view }) {
 
-    let groupsquery = await Group.query()
+    let groupsquery = await Group.query().orderBy('datestring')
     let groups = groupsquery.map((group) => group.serialize())
     // usage example:
     let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
@@ -54,7 +54,7 @@ export default class IndicesController {
   }
   public async nurse({ view }) {
 
-    let groupsquery = await Group.query()
+    let groupsquery = await Group.query().orderBy('datestring')
     let groups = groupsquery.map((group) => group.serialize())
     // usage example:
     let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
@@ -79,7 +79,7 @@ export default class IndicesController {
 
   public async manage({ view }) {
 
-    let sourcesquery = await Source.query()
+    let sourcesquery = await Source.query().orderBy('datestring')
     let sources = sourcesquery.map((group) => group.serialize())
     // usage example:
     let datestrings = sources.map((x) => (x.datestring)).filter(onlyUnique);

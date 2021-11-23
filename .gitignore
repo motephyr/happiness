@@ -20,4 +20,5 @@ database/*.sqlite
 .idea
 
 ecosystem.config.js
-public/assets/*
+public/assets/entrypoints.json
+public/assets/manifest.json

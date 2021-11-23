@@ -31,13 +31,17 @@ export default class OldersController {
   }
 
   public async show({ view, params }) {
-    const older = await Older.findBy('id', params.id)
-    const groups = await Group.query().where({ older_id: params.id })
-      .preload('sources', (q) => {
-        q.orderBy('timestring')
-      })
+    let older = await Older.findBy('id', params.id)
+    const groups = await Group.query().where({ older_id: params.id }).orderBy('datestring', 'desc')
+    .preload('sources', (q) => {
+      q.orderBy('timestring')
+    })
+    const todaytimes = groups.filter((x) => x.datestring === view.globals.today()).length
+    const todaysumtime = groups.filter((x) => x.datestring === view.globals.today()).reduce((sum, x) =>{
+      return sum + parseInt(x.duringtime)
+    }, 0)
 
-    return view.render('olders/_id', { older, groups })
+    return view.render('olders/_id', { older, groups, todaytimes, todaysumtime })
   }
 
   public async edit({ view, params }: HttpContextContract) {

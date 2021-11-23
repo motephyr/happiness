@@ -30,12 +30,12 @@
 
               <td class="border border-green-600">{{ "{{data.timestring}}" }}</td>
               <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
-                <video controls v-if="data.action.includes('come')" preload="false">
+                <video controls v-if="data.action.includes('come')" preload="none">
                   <source :src="data.url" type="video/mp4" />
                 </video>
               </td>
               <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
-                <video controls v-if="data.action.includes('go')" preload="false">
+                <video controls v-if="data.action.includes('go')" preload="none">
                   <source :src="data.url" type="video/mp4" />
                 </video>
               </td>

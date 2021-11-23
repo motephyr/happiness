@@ -68,7 +68,7 @@ export default class GroupsController {
   public async show({ params, response }) {
     const { id }: { id: String } = params
 
-    const group: any = await Group.query().preload('sources').where({datestring: id})
+    const group: any = await Group.query().preload('sources').where({datestring: id}).orderBy('id')
     if (!group) {
       return response.notFound({ message: 'group not found' })
     }

@@ -7,7 +7,6 @@
 
   <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
 
-
     <div class="flex flex-wrap">
       <div class="w-full md:w-1/2 xl:w-1/3 p-6">
         <!--Metric Card-->
@@ -24,8 +23,8 @@
               <h1 class="older-title">病史:{{ older.medicalrecord }}</h1>
               <h1 class="older-title">用藥紀錄:{{ older.medicine }}</h1>
               <h1 class="older-title">注意事項:{{ older.notice }}</h1>
-              <h3 class="older-title">活動次數:</h3>
-              <h3 class="older-title">總時長:</h3>
+              <h3 class="older-title">本日活動次數:{{todaytimes}}</h3>
+              <h3 class="older-title">本日活動總時長:{{toHHMMSS(todaysumtime)}}</h3>
               <a class="older-meta-small" href="/olders/{{older.id}}/edit">修改</a>
               <a class="older-meta-small" href="/olders">回列表頁</a>
             </div>
@@ -95,7 +94,7 @@
                   <td class="border border-green-600">{{group.datestring}}</td>
                   <td class="border border-green-600">{{new Date(parseInt(group.sources[0].timestring)*1000).toISOString().slice(11,19).replace(/-/g,"")}}</td>
                   <td class="border border-green-600">{{new Date(parseInt(group.sources[1].timestring)*1000).toISOString().slice(11,19).replace(/-/g,"")}}</td>
-                  <td class="border border-green-600">{{group.duringtimeToHHMMSS}}</td>
+                  <td class="border border-green-600">{{toHHMMSS(group.duringtime)}}</td>
                   <td class="border border-green-600">{{group.remark}}</td>
                 </tr>
                 @end

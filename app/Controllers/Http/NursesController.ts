@@ -5,7 +5,7 @@ import Older from 'App/Models/Older'
 export default class NursesController {
 
   public async nurse({ view, params }) {
-    const olders = await Older.all()
+    const olders = await Older.query()
 
     return view.render('nurse/nurse', { params, olders })
   }

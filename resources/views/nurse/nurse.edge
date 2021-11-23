@@ -22,7 +22,7 @@
               {{ "{{data.sources[1].timestring }}" }}</td>
 
             <td class="border border-green-600" v-if="data.sources[0].url">
-              <video controls preload="false">
+              <video controls preload="none">
                 <source :src="data.sources[0].url" type="video/mp4" />
               </video>
             </td>
@@ -30,7 +30,7 @@
               {{ "{{data.sources[0].action}}" }}
             </td>
             <td class="border border-green-600" v-if="data.sources[1].url">
-              <video controls preload="false">
+              <video controls preload="none">
                 <source :src="data.sources[1].url" type="video/mp4" />
               </video>
             </td>
