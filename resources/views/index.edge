@@ -85,7 +85,8 @@
         <div class="bg-white border-transparent rounded-lg shadow-xl">
 
           <div class="p-5">
-            <line-chart :styles="myStyles"></line-chart>
+            <apexchart width="500" type="line" :options="options" :series="series"></apexchart>
+
           </div>
         </div>
         <!--/Graph Card-->
@@ -96,44 +97,32 @@
 
 <script>
 
-  Vue.component('line-chart', {
-    extends: VueChartJs.Line,
-    mounted() {
-      this.renderChart({
-        labels: [ 
+
+  Vue.component('apexchart', VueApexCharts)
+
+
+
+
+  var vm = new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        options: {
+          chart: {
+            id: 'vuechart-example'
+          },
+          xaxis: {
+            categories: [ 
         @each(datestring in datestrings)
           '{{ datestring }}',
         @end
         ]
-        ,
-      datasets: [
-        {
-          label: 'A',
-          fill: false,
-          data: [4, 9, 10, 40, 3, 80, 40]
+          }
         },
-        {
-          label: 'B',
-          fill: false,
-          data: [40, 39, 10, 4, 39, 8, 40]
-        },
-        {
-          label: 'C',
-          fill: false,
-          data: [40, 3, 1, 40, 5, 20, 3]
-        }
-      ]
-    }, { responsive: true, maintainAspectRatio: false })
-    }
-
-  })
-
-  var vm = new Vue({
-    el: '#app',
-    data: {
-      myStyles: {
-        height: '400px',
-        position: 'relative'
+        series: [{
+          name: 'series-1',
+          data: [30, 40, 45, 50, 49, 60, 70, 91]
+        }]
       }
     }
   })

@@ -35,55 +35,9 @@
       </table>
     </div>
     <div class="grid-item">
-      <line-chart :styles="myStyles"></line-chart>
     </div>
 
   </div>
 </main>
 
-<script>
-
-  Vue.component('line-chart', {
-    extends: VueChartJs.Line,
-    mounted() {
-      this.renderChart({
-        labels: [ 
-        @each(datestring in datestrings)
-          '{{ datestring }}',
-        @end
-        ]
-        ,
-      datasets: [
-        {
-          label: 'A',
-          fill: false,
-          data: [4, 9, 10, 40, 3, 80, 40]
-        },
-        {
-          label: 'B',
-          fill: false,
-          data: [40, 39, 10, 4, 39, 8, 40]
-        },
-        {
-          label: 'C',
-          fill: false,
-          data: [40, 3, 1, 40, 5, 20, 3]
-        }
-      ]
-    }, { responsive: true, maintainAspectRatio: false })
-    }
-
-  })
-
-  var vm = new Vue({
-    el: '#app',
-    data: {
-      myStyles: {
-        height: '400px',
-        position: 'relative'
-      }
-    }
-  })
-
-</script>
 @endsection
