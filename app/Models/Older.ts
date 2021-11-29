@@ -37,4 +37,6 @@ export default class Older extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
   sumtime: number[]
+  todaytime: number
+  todaynum: number
 }

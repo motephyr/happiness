@@ -18,29 +18,32 @@ export default class IndicesController {
         }).reduce((sum, w) => (sum + parseInt(w.duringtime)), 0)
       })
 
-
-      // x.groups.reduce((sum, y) => {
-      //   sum[y.datestring] = sum[y.datestring] ? sum[y.datestring] + parseInt(y.duringtime) : parseInt(y.duringtime)
-      //   return sum
-      // }, {})
+      x.todaytime = x.groups.filter((z) => {
+        return z.datestring === view.globals.today()
+      }).reduce((sum, w) => (sum + parseInt(w.duringtime)), 0)
+      x.todaynum = x.groups.filter((z) => {
+        return z.datestring === view.globals.today()
+      }).reduce((sum) => (sum + 1), 0)
       return x
     })
-    // console.log(oldersumetimes)
-    // let times = datestrings.map((x) => {
-    //   return groups.filter((y) => {
-    //     return x === y.datestring
-    //   }).length
-    // })
 
-    // let longesttimes = datestrings.map((x) => {
-    //   let duringtimes = groups
-    //     .filter((y) => {
-    //       return x === y.datestring
-    //     }).map((z) => parseInt(z.duringtime))
-    //   return Math.max(...duringtimes)
-    // })
+    let important = sumetimes.sort((x, y) => (y.todaytime - x.todaytime))[0]
+    if (important.todaynum === 0) {
+      important.name = '無'
+      important.room = ''
+      important.todaynum = NaN
+      important.todaytime = NaN
+    }
 
-    let result = { datestrings, sumetimes }
+
+    const rooms = olders.reduce((sum, x) => {
+      let obj = {}
+      obj[x.room] = obj[x.room] ? obj[x.room] + 1 : 1
+      return { ...sum, ...obj }
+    }, {})
+
+
+    let result = { datestrings, sumetimes, rooms, important }
 
     return view.render('index', result)
   }

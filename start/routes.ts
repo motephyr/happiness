@@ -25,7 +25,7 @@ import Route from '@ioc:Adonis/Core/Route'
 // })
 
 Route.get('/', 'IndicesController.index')
-Route.get('/list', 'IndicesController.list')
+Route.get('/list', 'IndicesController.index')
 Route.get('/nurse', 'IndicesController.nurse')
 Route.get('/manage', 'IndicesController.manage')
 

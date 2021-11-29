@@ -8,17 +8,18 @@
     <div class="flex flex-wrap">
       <div class="w-full md:w-1/2 xl:w-1/4 p-6">
         <!--Metric Card-->
-        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5  h-full">
+        <div
+          class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5  h-full">
           <div class="flex flex-row items-center">
             <div class="flex-shrink pr-4">
               <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
             </div>
             <div class="flex-1">
               <h5 class="font-bold text-gray-600">今日重點</h5>
-              <h3 class="font-bold">年長者:</h3>
-              <h3 class="font-bold">房間:</h3>
-              <h3 class="font-bold">活動次數:</h3>
-              <h3 class="font-bold">總時長:</h3>
+              <h3 class="font-bold">年長者:{{important.name}}</h3>
+              <h3 class="font-bold">房間:{{important.room}}</h3>
+              <h3 class="font-bold">活動次數:{{important.todaynum}}</h3>
+              <h3 class="font-bold">總時長:{{important.todaytime}}</h3>
             </div>
           </div>
         </div>
@@ -26,7 +27,8 @@
       </div>
       <div class="w-full md:w-1/2 xl:w-1/4 p-6">
         <!--Metric Card-->
-        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5  h-full">
+        <div
+          class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5  h-full">
           <div class="flex flex-row items-center">
             <div class="flex-shrink pr-4">
               <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
@@ -43,17 +45,17 @@
       </div>
       <div class="w-full md:w-1/2 xl:w-1/4 p-6">
         <!--Metric Card-->
-        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5  h-full">
+        <div
+          class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5  h-full">
           <div class="flex flex-row items-center">
             <div class="flex-shrink pr-4">
               <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
             </div>
             <div class="flex-1">
               <h5 class="font-bold text-gray-600">房間總覽</h5>
-              <h3 class="font-bold">A1 room: 1人</h3>
-              <h3 class="font-bold">A2 room: 3人</h3>
-              <h3 class="font-bold">G room: 0人</h3>
-              <h3 class="font-bold">H room: 0人</h3>
+              @each(room in Object.keys(rooms).sort())
+              <h3 class="font-bold">{{room}} room: {{rooms[room]}}人</h3>
+              @end
             </div>
           </div>
         </div>
@@ -61,7 +63,8 @@
       </div>
       <div class="w-full md:w-1/2 xl:w-1/4 p-6">
         <!--Metric Card-->
-        <div class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5 h-full">
+        <div
+          class="bg-gradient-to-b from-green-200 to-green-100 border-b-4 border-green-600 rounded-lg shadow-xl p-5 h-full">
           <div class="flex flex-row items-center">
             <div class="flex-shrink pr-4">
               <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
@@ -114,18 +117,18 @@
           xaxis: {
             categories: [ 
         @each(datestring in datestrings)
-          '{{ datestring }}',
+      '{{ datestring }}',
         @end
         ]
           }
         },
-        series: [     
+  series: [     
           @each(older in sumetimes)
-          {
-          name: '{{ older.name }}',
-          data: [{{ older.sumtime }}]
+  {
+    name: '{{ older.name }}',
+      data: [{{ older.sumtime }}]
           },
-        @end
+  @end
       ]
       }
     }
