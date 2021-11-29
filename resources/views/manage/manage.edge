@@ -6,8 +6,12 @@
       <div>
         本日為{{params.datestring}}
         <a @click="resetData()"
-          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">
+          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-blue-800">
           重設本日資料
+        </a>
+        <a @click="deleteData()"
+          class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-red-800">
+          刪除本日資料
         </a>
       </div>
       <div>
@@ -41,7 +45,7 @@
               </td>
               <td class="border border-green-600" v-else colspan="2">
                 {{ "{{data.action}}" }}
-             </td>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -74,7 +78,7 @@
 
         // Will display time in 10:30:23 format
         x.timestring = `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()} `
-        + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+          + hours.substr(-2) + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 
         return x
       })
@@ -88,6 +92,13 @@
       async resetData() {
         let response = await axios.post('/manage/{{params.datestring}}/resetData')
         location.reload()
+      },
+      async deleteData() {
+        var msg = "您真的確定要刪除嗎？\n\n請確認！";
+        if (confirm(msg) === true) {
+          let response = await axios.post('/manage/{{params.datestring}}/deleteData')
+          location.href = '/manage'
+        }
       }
     }
   })

@@ -35,6 +35,7 @@ Route.post('/nurse/:datestring/groups/:group_id', 'NursesController.setOlderId')
 Route.get('/manage/:datestring', 'ManagesController.manage')
 Route.post('/manage/:datestring/createGroup', 'ManagesController.createGroup')
 Route.post('/manage/:datestring/resetData', 'ManagesController.resetData')
+Route.post('/manage/:datestring/deleteData', 'ManagesController.deleteData')
 
 Route.group(() => {
   Route.get('/new', 'OldersController.create')

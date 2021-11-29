@@ -31,6 +31,12 @@ export default class ManagesController {
       await Source.query().where({ datestring }).update({ group_id: null })
       await Group.query().where({ datestring }).delete()
     return response.ok({ message: 'Group reset successfully.' })
+  }
 
+  public async deleteData({ response, params }) {
+    let datestring = params.datestring
+      await Source.query().where({ datestring }).delete()
+      await Group.query().where({ datestring }).delete()
+    return response.ok({ message: 'Group delete successfully.' })
   }
 }
