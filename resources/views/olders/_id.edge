@@ -107,9 +107,9 @@
                 <tr>
                   <td class="border border-green-600">{{group.datestring}}</td>
                   <td class="border border-green-600">{{new
-                    Date(parseInt(group.sources[0].timestring)*1000).toISOString().slice(11,19).replace(/-/g,"")}}</td>
+                    Date(parseInt(group.sources[0].timestring)*1000).toTimeString().slice(0,8)}}</td>
                   <td class="border border-green-600">{{new
-                    Date(parseInt(group.sources[1].timestring)*1000).toISOString().slice(11,19).replace(/-/g,"")}}</td>
+                    Date(parseInt(group.sources[1].timestring)*1000).toTimeString().slice(0,8)}}</td>
                   <td class="border border-green-600">{{toHHMMSS(group.duringtime)}}</td>
                   <td class="border border-green-600">{{group.remark}}</td>
                 </tr>
@@ -149,7 +149,10 @@
             }
           },
           xaxis: {
-            type: 'datetime'
+            type: 'datetime',
+            labels: {
+              datetimeUTC: false
+            }
           }
         },
         series: [
@@ -158,8 +161,8 @@
             @each(group in groups)
       {
         x: '{{ group.datestring }}',
-          y: [new Date({{ parseInt(group.sources[0].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6)+ '-' + group.datestring.slice(6, 8))   }}).getTime(),
-  new Date({{ parseInt(group.sources[1].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6)+ '-' + group.datestring.slice(6, 8)) }}).getTime()]
+          y: [{{ parseInt(group.sources[0].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6)+ '-' + group.datestring.slice(6, 8))   }},
+  {{ parseInt(group.sources[1].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6)+ '-' + group.datestring.slice(6, 8)) }}]
     },
         @end
  

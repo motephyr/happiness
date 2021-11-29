@@ -9,7 +9,7 @@
       <table class="border-separate border border-green-800">
         <thead>
           <tr>
-            <th class="border border-green-600">時間</th>
+            <th class="border border-green-600 w-1/6">時間</th>
             <th class="border border-green-600">進入空間影像</th>
             <th class="border border-green-600">離開空間影像</th>
             <th class="border border-green-600 w-1/6">事件分類</th>
@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <tr v-for="data of myData">
-            <td class="border border-green-600">{{ "{{data.sources[0].timestring }}" }}
+            <td class="border border-green-600 w-1/6">{{ "{{data.sources[0].timestring }}" }}
               {{ "{{data.sources[1].timestring }}" }}</td>
 
             <td class="border border-green-600" v-if="data.sources[0].url">
