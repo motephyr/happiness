@@ -1,45 +1,51 @@
 @layout('layouts/master')
 
 @section('content')
-@if(flashMessages.has('notification'))
-<p class="info-text">{{flashMessages.get("notification")}}</p>
-@endif
-<div class="row row-wrap">
-  <a href="/olders/new">新增年長者</a>
+<main>
+  @if(flashMessages.has('notification'))
+  <p class="info-text">{{flashMessages.get("notification")}}</p>
+  @endif
+  <div class="grid-container w-full">
+    管理頁面
+    <a href="/olders/new"
+      class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800 bg-blue-800">
+      新增年長者
+    </a>
+    <div class="grid-item">
+
+      <table class="border-separate border border-green-800 w-full sm:text-center">
+        <thead>
+          <tr>
+            <th class="border border-green-600">姓名</th>
+            <th class="border border-green-600">房間</th>
+            <th class="border border-green-600"></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          @each(older in olders)
+          <tr>
+            <td class="border border-green-600">
+              <a href="{{ route('OldersController.show', {id: older.id}) }}">
+                {{ older.name }}
+              </a>
+            </td>
+            <td class="border border-green-600">
+              {{ older.room }}
+            </td>
+            <td class="border border-green-600">
+              <a href="/olders/{{older.id}}/edit" class="older-meta-small">
+                編輯資料
+              </a>
+            </td>
+
+          </tr>
+          @endeach
 
 
-  <table class="border-separate border border-green-800 w-full">
-    <thead>
-      <tr>
-        <th class="border border-green-600">姓名</th>
-        <th class="border border-green-600">房間</th>
-        <th class="border border-green-600"></th>
-
-      </tr>
-    </thead>
-    <tbody>
-      @each(older in olders)
-      <tr>
-        <td class="border border-green-600">
-          <a href="{{ route('OldersController.show', {id: older.id}) }}">
-            {{ older.name }}
-          </a>
-        </td>
-        <td class="border border-green-600">
-          {{ older.room }}
-        </td>
-        <td class="border border-green-600">
-          <a href="/olders/{{older.id}}/edit" class="older-meta-small">
-            編輯資料
-          </a>
-        </td>
-
-      </tr>
-      @endeach
-
-
-    </tbody>
-  </table>
-
-</div>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
 @endsection
