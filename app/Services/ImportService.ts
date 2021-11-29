@@ -3,13 +3,13 @@ import Source from 'App/Models/Source'
 import Group from 'App/Models/Group'
 
 export default class ImportService {
-  public static async ImportClassification(filelocation) {
+  public static async ImportClassification(filelocation, datestring) {
     let newworkbook = new Excel.Workbook()
 
     let workbook = await newworkbook.csv.readFile(filelocation)
-    const row = workbook.getRow(2);
-    const date = new Date(Number(row.values[1]) * 1000);
-    const datestring = `${date.getFullYear()}${(date.getMonth() + 1)}${date.getDate()}`
+    // const row = workbook.getRow(2);
+    // const date = new Date(Number(row.values[1]) * 1000);
+    // const datestring = `${date.getFullYear()}${(date.getMonth() + 1)}${date.getDate()}`
     await Source.query().where({ datestring }).delete()
     await Group.query().where({ datestring }).delete()
 

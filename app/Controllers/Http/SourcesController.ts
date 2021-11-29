@@ -122,7 +122,7 @@ export default class SourcesController {
     if (upload) {
       await upload.move(Application.tmpPath(dir))
     }
-    await ImportService.ImportClassification(Application.tmpPath(dir) + upload.fileName)
+    await ImportService.ImportClassification(Application.tmpPath(dir) + upload.fileName, upload.fileName.split('.')[0])
     return response.ok({ message: 'source upload successfully.' })
   }
 }

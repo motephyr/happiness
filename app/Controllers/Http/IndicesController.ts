@@ -1,7 +1,7 @@
 // import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Group from 'App/Models/Group'
 import Source from 'App/Models/Source'
-
+import Older from 'App/Models/Older'
 export default class IndicesController {
   public async index({ view }) {
 
@@ -9,21 +9,38 @@ export default class IndicesController {
     let groups = groupsquery.map((group) => group.serialize())
     // usage example:
     let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
-    let times = datestrings.map((x) => {
-      return groups.filter((y) => {
-        return x === y.datestring
-      }).length
-    })
 
-    let longesttimes = datestrings.map((x) => {
-      let duringtimes = groups
-        .filter((y) => {
-          return x === y.datestring
-        }).map((z) => parseInt(z.duringtime))
-      return Math.max(...duringtimes)
-    })
+    let olders = await Older.query().preload('groups')
+    const sumetimes = olders.map((x) => {
+      x.sumtime = datestrings.map((y) => {
+        return x.groups.filter((z) => {
+          return z.datestring === y
+        }).reduce((sum, w) => (sum + parseInt(w.duringtime)), 0)
+      })
 
-    let result = { datestrings, times, longesttimes }
+
+      // x.groups.reduce((sum, y) => {
+      //   sum[y.datestring] = sum[y.datestring] ? sum[y.datestring] + parseInt(y.duringtime) : parseInt(y.duringtime)
+      //   return sum
+      // }, {})
+      return x
+    })
+    // console.log(oldersumetimes)
+    // let times = datestrings.map((x) => {
+    //   return groups.filter((y) => {
+    //     return x === y.datestring
+    //   }).length
+    // })
+
+    // let longesttimes = datestrings.map((x) => {
+    //   let duringtimes = groups
+    //     .filter((y) => {
+    //       return x === y.datestring
+    //     }).map((z) => parseInt(z.duringtime))
+    //   return Math.max(...duringtimes)
+    // })
+
+    let result = { datestrings, sumetimes }
 
     return view.render('index', result)
   }
