@@ -27,18 +27,21 @@ export default class IndicesController {
       return x
     })
 
-    let important = sumetimes.sort((x, y) => (y.todaytime - x.todaytime))[0]
-    if (important.todaynum === 0) {
-      important.name = '無'
-      important.room = ''
-      important.todaynum = NaN
-      important.todaytime = NaN
+    let importantolders = sumetimes.sort((x, y) => (y.todaytime - x.todaytime))[0]
+    let important = {}
+    if (importantolders.todaynum === 0) {
+      important['name'] = '無'
+      important['room'] = ''
+      important['todaynum'] = NaN
+      important['todaytime'] = NaN
+    } else {
+      important = importantolders
     }
 
 
     const rooms = olders.reduce((sum, x) => {
       let obj = {}
-      obj[x.room] = obj[x.room] ? obj[x.room] + 1 : 1
+      obj[x.room] = sum[x.room] ? sum[x.room] + 1 : 1
       return { ...sum, ...obj }
     }, {})
 
@@ -75,24 +78,33 @@ export default class IndicesController {
   public async nurse({ view }) {
 
     let groupsquery = await Group.query().orderBy('datestring')
-    let groups = groupsquery.map((group) => group.serialize())
+    // let groups = groupsquery.map((group) => group.serialize())
     // usage example:
-    let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
-    let times = datestrings.map((x) => {
-      return groups.filter((y) => {
-        return x === y.datestring
-      }).length
-    })
+    // let datestrings = groups.map((x) => (x.datestring)).filter(onlyUnique);
+    // let times = datestrings.map((x) => {
+    //   return groups.filter((y) => {
+    //     return x === y.datestring
+    //   }).length
+    // })
 
-    let longesttimes = datestrings.map((x) => {
-      let duringtimes = groups
-        .filter((y) => {
-          return x === y.datestring
-        }).map((z) => parseInt(z.duringtime))
-      return Math.max(...duringtimes)
-    })
+    // let longesttimes = datestrings.map((x) => {
+    //   let duringtimes = groups
+    //     .filter((y) => {
+    //       return x === y.datestring
+    //     }).map((z) => parseInt(z.duringtime))
+    //   return Math.max(...duringtimes)
+    // })
 
-    let result = { datestrings, times, longesttimes }
+    let datestrings = groupsquery.reduce((sum, x) => {
+      let obj = { [x.datestring]: { time: 0, longesttime: 0 } }
+      obj[x.datestring]['time'] = sum[x.datestring] && sum[x.datestring]['time'] ? sum[x.datestring]['time'] + 1 : 1
+      obj[x.datestring]['longesttime'] = sum[x.datestring] && sum[x.datestring]['longesttime'] && sum[x.datestring]['longesttime'] > parseInt(x.duringtime) ? sum[x.datestring]['longesttime'] : parseInt(x.duringtime)
+
+      return { ...sum, ...obj }
+    }, {})
+
+
+    let result = { datestrings }
 
     return view.render('nurse', result)
   }
@@ -100,18 +112,18 @@ export default class IndicesController {
   public async manage({ view }) {
 
     let sourcesquery = await Source.query().orderBy('datestring')
-    let sources = sourcesquery.map((group) => group.serialize())
+    // let sources = sourcesquery.map((group) => group.serialize())
     // usage example:
-    let datestrings = sources.map((x) => (x.datestring)).filter(onlyUnique);
-    let times = datestrings.map((x) => {
-      return sources.filter((y) => {
-        return x === y.datestring
-      }).length
-    })
+    let datestrings = sourcesquery.reduce((sum, x) => {
+      let obj = {}
+      obj[x.datestring] = sum[x.datestring] ? sum[x.datestring] + 1 : 1
+      return { ...sum, ...obj }
+    }, {})
 
 
 
-    let result = { datestrings, times }
+
+    let result = { datestrings }
 
     return view.render('manage', result)
   }

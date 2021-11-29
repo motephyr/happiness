@@ -8,23 +8,19 @@
         <thead>
           <tr>
             <th class="border border-green-600">日期</th>
-            @each(datestring in datestrings)
-            <th class="border border-green-600">
-              <a href="/manage/{{datestring}}">{{datestring}}</a>
-            </th>
-            @end
-
-
+            <th class="border border-green-600">半夜活動事件數量</th>
           </tr>
         </thead>
         <tbody>
+          @each(datestring in Object.keys(datestrings).reverse())
           <tr>
-            <td class="border border-green-600">半夜活動事件數量</td>
-            @each(time in times)
-            <td class="border border-green-600">{{time}}</td>
-            @end
-          </tr>
+            <td class="border border-green-600">
+              <a href="/manage/{{datestring}}">{{datestring}}</a>
 
+            </td>
+            <td class="border border-green-600">{{datestrings[datestring]}}</td>
+          </tr>
+          @end
         </tbody>
       </table>
     </div>
