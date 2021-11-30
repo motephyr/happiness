@@ -6,47 +6,47 @@
       本日為{{params.datestring}}
     </div>
     <div>
-      <table class="border-separate border border-green-800">
+      <table class="border-separate border-green-800">
         <thead>
-          <tr>
-            <th class="border border-green-600 w-1/6">時間</th>
-            <th class="border border-green-600">進入空間影像</th>
-            <th class="border border-green-600">離開空間影像</th>
-            <th class="border border-green-600 w-1/6">事件分類</th>
-            <th class="border border-green-600">護理師回報</th>
+          <tr class="bg-indigo-700 text-white">
+            <th class="border-green-600 w-1/6">時間</th>
+            <th class="border-green-600">進入空間影像</th>
+            <th class="border-green-600">離開空間影像</th>
+            <th class="border-green-600 w-1/6">事件分類</th>
+            <th class="border-green-600">護理師回報</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="data of myData">
-            <td class="border border-green-600 w-1/6">{{ "{{data.sources[0].timestring }}" }}
+          <tr v-for="(data, index) of myData" :style="{backgroundColor: (index % 2 === 1) ? '#f89b3e' : '#fdf1e0'}">
+            <td class="border-green-600 w-1/6">{{ "{{data.sources[0].timestring }}" }}
               {{ "{{data.sources[1].timestring }}" }}</td>
 
-            <td class="border border-green-600" v-if="data.sources[0].url">
+            <td class="border-green-600" v-if="data.sources[0].url">
               <video controls preload="none">
                 <source :src="data.sources[0].url" type="video/mp4" />
               </video>
             </td>
-            <td class="border border-green-600" v-else>
+            <td class="border-green-600" v-else>
               {{ "{{data.sources[0].action}}" }}
             </td>
-            <td class="border border-green-600" v-if="data.sources[1].url">
+            <td class="border-green-600" v-if="data.sources[1].url">
               <video controls preload="none">
                 <source :src="data.sources[1].url" type="video/mp4" />
               </video>
             </td>
-            <td class="border border-green-600" v-else>
+            <td class="border-green-600" v-else>
               {{ "{{data.sources[1].action}}" }}
             </td>
-            <td class="border border-green-600" v-if="data.duringtime">
+            <td class="border-green-600" v-if="data.duringtime">
               {{ "{{data.remark}}" }}
               <br />
               活動時間: {{"{{data.duringtime}}"}}秒
             </td>
-            <td class="border border-green-600">
+            <td class="border-green-600">
               <form method="POST" :action=`/nurse/{{params.datestring}}/groups/${data.id}`>
 
                 姓名∶
-                  <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="older_id">
+                  <select class="block appearance-none w-full bg-gray-200 border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="older_id">
                     <option value="">未設定</option>
                     @each(older in olders)
                     <option value="{{older.id}}" :selected="data.older_id == {{older.id}}">{{older.name}}</option>

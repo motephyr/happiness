@@ -15,35 +15,35 @@
         </a>
       </div>
       <div>
-        <table class="border-separate border border-green-800">
+        <table class="border-separate border-green-800">
           <thead>
-            <tr>
-              <th class="border border-green-600">分組(一進一出為一組)</th>
-              <th class="border border-green-600">組別</th>
-              <th class="border border-green-600">時間</th>
-              <th class="border border-green-600">進入空間影像</th>
-              <th class="border border-green-600">離開空間影像</th>
+            <tr class="bg-indigo-700 text-white">
+              <th class="border-green-600">分組</th>
+              <th class="border-green-600">組別</th>
+              <th class="border-green-600">時間</th>
+              <th class="border-green-600">進入空間影像</th>
+              <th class="border-green-600">離開空間影像</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="data of myData" v-if="myData">
-              <td class="border border-green-600">
+            <tr v-for="(data, index) of myData" :style="{backgroundColor: data.group_id ? 'gray' : (index % 2 === 1) ? '#f89b3e' : '#fdf1e0'}" v-if="myData">
+              <td class="border-green-600">
                 <input type="checkbox" class="form-radio" name="sourceId" :value="data.id" :disabled="data.group_id" />
               </td>
-              <td class="border border-green-600">{{ "{{data.group_id}}" }}</td>
+              <td class="border-green-600">{{ "{{data.group_id}}" }}</td>
 
-              <td class="border border-green-600">{{ "{{data.timestring}}" }}</td>
-              <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
+              <td class="border-green-600">{{ "{{data.timestring}}" }}</td>
+              <td class="border-green-600" v-if="['come', 'go'].includes(data.action)">
                 <video controls v-if="data.action.includes('come')" preload="none">
                   <source :src="data.url" type="video/mp4" />
                 </video>
               </td>
-              <td class="border border-green-600" v-if="['come', 'go'].includes(data.action)">
+              <td class="border-green-600" v-if="['come', 'go'].includes(data.action)">
                 <video controls v-if="data.action.includes('go')" preload="none">
                   <source :src="data.url" type="video/mp4" />
                 </video>
               </td>
-              <td class="border border-green-600" v-else colspan="2">
+              <td class="border-green-600" v-else colspan="2">
                 {{ "{{data.action}}" }}
               </td>
             </tr>
@@ -53,7 +53,7 @@
       <div>
         事件類別:
         <input type="text"
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           name="remark" value="半夜走動" />
         <input type="submit" value="送出"
           class="h-12 px-6 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" />

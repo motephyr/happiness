@@ -4,21 +4,27 @@
   <div class="grid-container w-full">
     管理頁面
     <div class="grid-item">
-      <table class="border-separate border border-green-800 w-full sm:text-center">
+      <table class="border-separate border-green-800 w-full sm:text-center">
         <thead>
-          <tr>
-            <th class="border border-green-600">日期</th>
-            <th class="border border-green-600">半夜活動事件數量</th>
+          <tr style="background-color: #1c4b73; color: white ">
+            <th class="border-green-600">日期</th>
+            <th class="border-green-600">半夜活動事件數量</th>
           </tr>
         </thead>
         <tbody>
-          @each(datestring in Object.keys(datestrings).reverse())
-          <tr>
-            <td class="border border-green-600">
+          @each((datestring, index) in Object.keys(datestrings).reverse())
+          <tr
+          @if(index % 2 == 0)
+          style="background-color: #f89b3e; "
+        @else
+          style="background-color: #fdf1e0; "
+        @end
+          >
+            <td class="border-green-600">
               <a href="/manage/{{datestring}}">{{datestring}}</a>
 
             </td>
-            <td class="border border-green-600">{{datestrings[datestring]}}</td>
+            <td class="border-green-600">{{datestrings[datestring]}}</td>
           </tr>
           @end
         </tbody>
