@@ -152,7 +152,9 @@
             type: 'datetime',
             labels: {
               datetimeUTC: false
-            }
+            },
+            min: new Date(new Date(1970, 0, 0).setHours(21, 0, 0, 0)).getTime(),
+            max: new Date(new Date(1970, 0, 1).setHours(9, 0, 0, 0)).getTime()
           }
         },
         series: [
@@ -161,10 +163,10 @@
             @each(group in groups)
       {
         x: '{{ group.datestring }}',
-          y: [{{ parseInt(group.sources[0].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6)+ '-' + group.datestring.slice(6, 8))   }},
-  {{ parseInt(group.sources[1].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6)+ '-' + group.datestring.slice(6, 8)) }}]
+          y: [{{ parseInt(group.sources[0].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6) + '-' + group.datestring.slice(6, 8)) }},
+  {{ parseInt(group.sources[1].timestring) * 1000 - new Date(group.datestring.slice(0, 4) + '-' + group.datestring.slice(4, 6) + '-' + group.datestring.slice(6, 8)) }}]
     },
-        @end
+  @end
  
             ]
           }

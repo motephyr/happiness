@@ -4,56 +4,55 @@ import { schema } from '@ioc:Adonis/Core/Validator'
 import Application from '@ioc:Adonis/Core/Application'
 import ImportService from 'App/Services/ImportService'
 
-
 export default class SourcesController {
   /**
-* @swagger
-* /sources:
-*   get:
-*     tags:
-*       - Source
-*     summary: Source API lists
-*     responses:
-*       200:
-*         description: Source lists
-*/
+   * @swagger
+   * /sources:
+   *   get:
+   *     tags:
+   *       - Source
+   *     summary: Source API lists
+   *     responses:
+   *       200:
+   *         description: Source lists
+   */
   public async index({ response }) {
     const sources = await Source.all()
 
     return response.ok(sources)
   }
   /**
-* @swagger
-* /sources:
-*   post:
-*     tags:
-*       - Source
-*     summary: Source API create
- *     parameters:
-  *       - name: idstring
-  *         description: idstring
-  *         in: query
-  *         required: true
-  *         type: string
+   * @swagger
+   * /sources:
+   *   post:
+   *     tags:
+   *       - Source
+   *     summary: Source API create
+   *     parameters:
+   *       - name: idstring
+   *         description: idstring
+   *         in: query
+   *         required: true
+   *         type: string
    *       - name: timestring
-  *         description: timestring
-  *         in: query
-  *         required: true
-  *         type: string
-  *       - name: action
-  *         description: action
-  *         in: query
-  *         required: true
-  *         type: string
-  *       - name: url
-  *         description: url
-  *         in: query
-  *         required: true
-  *         type: string
-*     responses:
-*       200:
-*         description: Source lists
-*/
+   *         description: timestring
+   *         in: query
+   *         required: true
+   *         type: string
+   *       - name: action
+   *         description: action
+   *         in: query
+   *         required: true
+   *         type: string
+   *       - name: url
+   *         description: url
+   *         in: query
+   *         required: true
+   *         type: string
+   *     responses:
+   *       200:
+   *         description: Source lists
+   */
   public async store({ request, response }) {
     const sourceSchema = schema.create({
       idstring: schema.string({ trim: true }),
@@ -71,7 +70,7 @@ export default class SourcesController {
   public async show({ params, response }) {
     const { id }: { id: String } = params
 
-    const source: any = await Source.query().where({datestring: id}).orderBy('timestring')
+    const source: any = await Source.query().where({ datestring: id }).orderBy('timestring')
     if (!source) {
       return response.notFound({ message: 'source not found' })
     }
@@ -122,7 +121,10 @@ export default class SourcesController {
     if (upload) {
       await upload.move(Application.tmpPath(dir))
     }
-    await ImportService.ImportClassification(Application.tmpPath(dir) + upload.fileName, upload.fileName.split('.')[0])
+    await ImportService.ImportClassification(
+      Application.tmpPath(dir) + upload.fileName,
+      upload.fileName.split('.')[0]
+    )
     return response.ok({ message: 'source upload successfully.' })
   }
 }
