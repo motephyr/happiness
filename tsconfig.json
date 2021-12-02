@@ -32,7 +32,8 @@
       "@adonisjs/view",
       "@adonisjs/shield",
       "@adonisjs/lucid",
-      "adonis5-swagger"
+      "adonis5-swagger",
+      "@eidellev/inertia-adonisjs"
     ]
   }
 }
