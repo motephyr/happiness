@@ -1,5 +1,5 @@
-const { join } = require('path')
 const Encore = require('@symfony/webpack-encore')
+const path = require('path')
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +61,12 @@ Encore.copyFiles({
   from: './resources/images',
   to: 'images/[path][name].[hash:8].[ext]',
 })
+
+// Encore.copyFiles({
+//   from: './resources/vue',
+//   to: 'vue/[path][name].[hash:8].[ext]',
+// })
+
 
 /*
 |--------------------------------------------------------------------------
@@ -142,7 +148,7 @@ Encore.configureDevServerOptions((options) => {
    */
   options.liveReload = true
   options.static.push({
-    directory: join(__dirname, './resources/views'),
+    directory: path.join(__dirname, './resources/views'),
     watch: true,
   })
 })
@@ -181,11 +187,11 @@ Encore.enablePostCssLoader()
 | sure to install the required dependencies.
 |
 */
-// Encore.enableVueLoader(() => {}, {
-//   version: 3,
-//   runtimeCompilerBuild: false,
-//   useJsx: false
-// })
+Encore.enableVueLoader(() => {}, {
+  version: 2,
+  runtimeCompilerBuild: false,
+  useJsx: false
+})
 
 /*
 |--------------------------------------------------------------------------
@@ -211,4 +217,8 @@ config.stats = 'errors-warnings'
 | Export config for webpack to do its job
 |
 */
+
+config.resolve.alias['@'] = path.resolve(__dirname, 'resources');
+
+
 module.exports = config

@@ -1,0 +1,111 @@
+<template>
+  <header class="w-full px-8 text-gray-700" style="background-color: #f89b3e">
+    <div
+      class="
+        container
+        flex flex-col flex-wrap
+        items-center
+        justify-between
+        py-5
+        mx-auto
+        md:flex-row
+        max-w-7xl
+      "
+    >
+      <div class="relative flex flex-col md:flex-row">
+        <Link
+          href="/"
+          class="
+            flex
+            items-center
+            mb-5
+            font-medium
+            text-gray-900
+            lg:w-auto lg:items-center lg:justify-center
+            md:mb-0
+          "
+        >
+          <img src="@/images/logo.png" width="200px" />
+        </Link>
+
+        <nav
+          class="
+            flex flex-wrap
+            items-center
+            mb-5
+            text-xl
+            md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200
+          "
+        >
+          <Link href="/list" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            首頁
+          </Link>
+        </nav>
+        <nav
+          class="
+            flex flex-wrap
+            items-center
+            mb-5
+            text-xl
+            md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200
+          "
+        >
+          <Link href="/nurse" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            事件分類
+          </Link>
+        </nav>
+        <nav
+          class="
+            flex flex-wrap
+            items-center
+            mb-5
+            text-xl
+            md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200
+          "
+        >
+          <a href="/olders" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            年長者名單
+          </a>
+        </nav>
+        <nav
+          class="
+            flex flex-wrap
+            items-center
+            mb-5
+            text-xl
+            md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200
+          "
+        >
+          <a href="/manage" class="mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900">
+            管理頁面
+          </a>
+        </nav>
+      </div>
+      {{ today() }}
+      <!-- <div class="inline-flex items-center ml-5 space-x-6 lg:justify-end">
+          <a href="#" class="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900">
+              Sign in
+          </a>
+          <a href="#" class="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+              Sign up
+          </a>
+      </div> -->
+    </div>
+  </header>
+</template>
+
+<script>
+import { Link } from '@inertiajs/inertia-vue'
+import helper from '/app/Helpers'
+
+export default {
+  components: {
+    Link,
+  },
+  methods: {
+    today() {
+      return helper.today()
+    },
+  },
+}
+</script>

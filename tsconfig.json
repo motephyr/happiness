@@ -8,6 +8,7 @@
     "build"
   ],
   "compilerOptions": {
+    "allowJs": true,
     "outDir": "build",
     "rootDir": "./",
     "sourceMap": true,

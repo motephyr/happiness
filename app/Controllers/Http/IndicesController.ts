@@ -2,8 +2,9 @@
 import Group from 'App/Models/Group'
 import Source from 'App/Models/Source'
 import Older from 'App/Models/Older'
+import helper from 'App/Helpers'
 export default class IndicesController {
-  public async index({ view }) {
+  public async index({ inertia }) {
     let groupsquery = await Group.query().orderBy('datestring')
     let groups = groupsquery.map((group) => group.serialize())
     // usage example:
@@ -11,25 +12,25 @@ export default class IndicesController {
 
     let olders = await Older.query().preload('groups')
     const sumetimes = olders.map((x) => {
-      x.sumtime = datestrings.map((y) => {
+      let obj = x.serialize()
+      obj.sumtime = datestrings.map((y) => {
         return x.groups
           .filter((z) => {
             return z.datestring === y
           })
           .reduce((sum, w) => sum + parseInt(w.duringtime), 0)
       })
-
-      x.todaytime = x.groups
+      obj.todaytime = x.groups
         .filter((z) => {
-          return z.datestring === view.globals.today()
+          return z.datestring === helper.today()
         })
         .reduce((sum, w) => sum + parseInt(w.duringtime), 0)
-      x.todaynum = x.groups
+      obj.todaynum = x.groups
         .filter((z) => {
-          return z.datestring === view.globals.today()
+          return z.datestring === helper.today()
         })
         .reduce((sum) => sum + 1, 0)
-      return x
+      return obj
     })
 
     let importantolders = sumetimes.sort((x, y) => y.todaytime - x.todaytime)[0]
@@ -48,10 +49,9 @@ export default class IndicesController {
       obj[x.room] = sum[x.room] ? sum[x.room] + 1 : 1
       return { ...sum, ...obj }
     }, {})
-
     let result = { datestrings, sumetimes, rooms, important }
 
-    return view.render('index', result)
+    return inertia.render('Index', result)
   }
 
   public async list({ view }) {
@@ -78,7 +78,7 @@ export default class IndicesController {
 
     return view.render('list', result)
   }
-  public async nurse({ view }) {
+  public async nurse({ inertia }) {
     let groupsquery = await Group.query().orderBy('datestring')
     // let groups = groupsquery.map((group) => group.serialize())
     // usage example:
@@ -103,8 +103,8 @@ export default class IndicesController {
         sum[x.datestring] && sum[x.datestring]['time'] ? sum[x.datestring]['time'] + 1 : 1
       obj[x.datestring]['longesttime'] =
         sum[x.datestring] &&
-        sum[x.datestring]['longesttime'] &&
-        sum[x.datestring]['longesttime'] > parseInt(x.duringtime)
+          sum[x.datestring]['longesttime'] &&
+          sum[x.datestring]['longesttime'] > parseInt(x.duringtime)
           ? sum[x.datestring]['longesttime']
           : parseInt(x.duringtime)
 
@@ -113,7 +113,7 @@ export default class IndicesController {
 
     let result = { datestrings }
 
-    return view.render('nurse', result)
+    return inertia.render('Nurse', result)
   }
 
   public async manage({ view }) {
