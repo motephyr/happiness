@@ -112,6 +112,8 @@
                     Date(parseInt(group.sources[1].timestring)*1000).toTimeString().slice(0,8)}}</td>
                   <td class="border border-green-600">{{toHHMMSS(group.duringtime)}}</td>
                   <td class="border border-green-600">{{group.remark}}</td>
+                  <!-- {{new Date(parseInt(group.sources[0].timestring)*1000)}}
+                    {{new Date(parseInt(group.sources[1].timestring)*1000)}} -->
                 </tr>
                 @end
 
@@ -153,8 +155,8 @@
             labels: {
               datetimeUTC: false
             },
-            // min: new Date(new Date(1970, 0, 0).setHours(21, 0, 0, 0)).getTime(),
-            // max: new Date(new Date(1970, 0, 1).setHours(9, 0, 0, 0)).getTime()
+            min: new Date(new Date(1970, 0, 0).setHours(21, 0, 0, 0)).getTime(),
+            max: new Date(new Date(1970, 0, 2).setHours(9, 0, 0, 0)).getTime()
           }
         },
         series: [
