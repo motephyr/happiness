@@ -133,7 +133,7 @@
           <div class="bg-white border-transparent rounded-lg shadow-xl">
             <div class="p-5">
               <VueApexCharts
-                width="100%"
+                width="97%"
                 height="300"
                 type="line"
                 :options="options"

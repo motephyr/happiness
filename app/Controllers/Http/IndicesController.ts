@@ -5,12 +5,18 @@ import Older from 'App/Models/Older'
 import helper from 'App/Helpers'
 export default class IndicesController {
   public async index({ inertia }) {
-    let groupsquery = await Group.query().orderBy('datestring')
-    let groups = groupsquery.map((group) => group.serialize())
-    // usage example:
-    let datestrings = groups.map((x) => x.datestring).filter(onlyUnique)
+    let datestring = helper.today(helper.addDays(new Date(), -7))
 
-    let olders = await Older.query().preload('groups')
+    let olders = await Older.query().preload('groups', (q) => {
+      q.where('datestring', '>', datestring).orderBy('datestring')
+    })
+    let groups = olders.reduce((sum, x) => {
+      return sum.concat(x.serialize().groups)
+    }, [])
+    let datestrings = groups.map((x) => {
+      return x['datestring'] ?? ''
+    }).filter(onlyUnique)
+
     const sumetimes = olders.map((x) => {
       let obj = x.serialize()
       obj.sumtime = datestrings.map((y) => {
