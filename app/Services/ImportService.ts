@@ -7,9 +7,7 @@ export default class ImportService {
     let newworkbook = new Excel.Workbook()
 
     let workbook = await newworkbook.csv.readFile(filelocation)
-    // const row = workbook.getRow(2);
-    // const date = new Date(Number(row.values[1]) * 1000);
-    // const datestring = `${date.getFullYear()}${(date.getMonth() + 1)}${date.getDate()}`
+
     await Source.query().where({ datestring }).delete()
     await Group.query().where({ datestring }).delete()
 
@@ -20,7 +18,7 @@ export default class ImportService {
         let idstring = values[2] //get cell and the row
         let timestring = values[1]
         if (values[3] !== -1) {
-          let action = values[4]
+          let action = values[4] || values[7]
           let space = values[5]
           let url = values[6]
 
