@@ -46,6 +46,8 @@ export default class IndicesController {
       important['room'] = ''
       important['todaynum'] = NaN
       important['todaytime'] = NaN
+      important['notice'] = '無'
+
     } else {
       important = importantolders
     }

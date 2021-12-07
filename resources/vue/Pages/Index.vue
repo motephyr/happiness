@@ -118,8 +118,9 @@
               <div class="flex-1">
                 <h5 class="font-bold text-gray-600">Tips:</h5>
                 <h3 class="font-bold">
-                  李Ｏ筆：處置作為是藥物減量，從11/17開始，注意晚上起床狀況。
+                  {{ important.name }}{{important.name !== '無' ? `:${important.notice}` : ''}}
                 </h3>
+      
               </div>
             </div>
           </div>
