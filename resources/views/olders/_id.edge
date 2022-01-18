@@ -74,7 +74,7 @@
         <div class="bg-white border-transparent rounded-lg shadow-xl">
 
           <div class="p-5">
-            <apexchart width="100%" height="100%" type="rangeBar" :options="options" :series="series"></apexchart>
+            <apexchart width="100%" height="200%" type="rangeBar" :options="options" :series="series"></apexchart>
           </div>
         </div>
         <!--/Graph Card-->
@@ -143,12 +143,15 @@
         options: {
           chart: {
             height: 350,
-            type: 'rangeBar'
+            type: 'rangeBar',
           },
           plotOptions: {
             bar: {
               horizontal: true
             }
+          },
+          tooltip: {
+            enabled: false
           },
           xaxis: {
             type: 'datetime',

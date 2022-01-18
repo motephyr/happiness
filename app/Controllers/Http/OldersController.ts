@@ -32,7 +32,7 @@ export default class OldersController {
 
   public async show({ view, params }) {
     let older = await Older.findBy('id', params.id)
-    let datestring = view.globals.today(view.globals.addDays(new Date(), -14))
+    let datestring = view.globals.today(view.globals.addDays(new Date(), -30))
     const groups = await Group.query()
       .where({ older_id: params.id })
       .andWhere('datestring', '>', datestring)
