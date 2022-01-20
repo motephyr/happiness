@@ -116,7 +116,7 @@
                 </div>
               </div>
               <div class="flex-1">
-                <h5 class="font-bold text-gray-600">Tips:</h5>
+                <h5 class="font-bold text-gray-600">Tips</h5>
                 <h3 class="font-bold">
                   {{ important.name }}{{important.name !== '無' ? `:${important.notice}` : ''}}
                 </h3>

@@ -22,3 +22,5 @@ database/*.sqlite
 ecosystem.config.js
 public/assets/entrypoints.json
 public/assets/manifest.json
+
+copy-config.sh

@@ -35,4 +35,4 @@ RUN npm ci --production
 # Expose port to outside world
 EXPOSE 3333
 # Start server up
-CMD [ "node", "server.js" ]
+CMD node ace migration:run --force && node server.js

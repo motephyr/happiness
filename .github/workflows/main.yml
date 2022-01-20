@@ -45,8 +45,9 @@ jobs:
         uses: fifsky/ssh-action@master   
         with:   
           command: |
-            docker pull motephyr/${{ github.event.repository.name }}:latest 
-            docker rm -f appName
+            rm docker-compose.yml
+            wget https://raw.githubusercontent.com/motephyr/happiness/master/docker-compose.yml
+            docker-compose pull
             docker-compose up -d
             docker image prune -af
           host: ${{ secrets.HOST }}   
