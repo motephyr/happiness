@@ -9,10 +9,10 @@ services:
     # Restart container in case of crashes etc
     restart: always
     # Set API to use host networking
-    network_mode: host # for not mac
-    # network_mode: bridge
-    # ports:
-    #   - 3333:3333
+    # network_mode: host # for not mac
+    network_mode: bridge
+    ports:
+      - 3333:3333
     # API depends on DB to be there
     # depends_on:
     #   - db
