@@ -47,7 +47,7 @@ jobs:
           command: |
             docker pull motephyr/${{ github.event.repository.name }}:latest 
             docker rm -f appName
-            docker run  --name=appName -d -p 8080:8080 motephyr/${{ github.event.repository.name }}:latest 
+            docker-compose up -d
             docker image prune -af
           host: ${{ secrets.HOST }}   
           user: ${{ secrets.USER }}   

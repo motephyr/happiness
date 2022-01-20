@@ -3,9 +3,8 @@ version: '3'
 services:
   api:
     # Build dockerfile
-    build:
-      context: .
-      dockerfile: Dockerfile
+    container_name: 'appName'
+    image: 'motephyr/happiness:latest'
     # Restart container in case of crashes etc
     restart: always
     # Set API to use host networking
@@ -24,7 +23,7 @@ services:
       TZ: "${TZ}"
       DRIVE_DISK: "${DRIVE_DISK}"
       DB_CONNECTION: "${DB_CONNECTION}"
-      PG_HOST: host.docker.internal
+      PG_HOST: "${PG_HOST}"
       PG_PORT: "${PG_PORT}"
       PG_USER: "${PG_USER}"
       PG_PASSWORD: "${PG_PASSWORD}"
