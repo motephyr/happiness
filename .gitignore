@@ -10,7 +10,7 @@ public/uploads
 
 # Environment variables, never commit this file
 .env*
-nginx*
+nginx.conf
 
 # The development sqlite file
 database/*.sqlite
