@@ -1,18 +1,18 @@
 version: '3'
 
 services:
-  api:
+  web:
     # Build dockerfile
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: 'motephyr/happiness:latest'
     # Restart container in case of crashes etc
     restart: always
+    volumes:
+      - uploads:/home/node/app/public/uploads
     # Set API to use host networking
-    # network_mode: host # for not mac
-    network_mode: bridge
-    ports:
-      - 3333:3333
+    network_mode: host # for not mac
+    # network_mode: bridge
+    # ports:
+    #   - 3333:3333
     # API depends on DB to be there
     # depends_on:
     #   - db
@@ -24,14 +24,11 @@ services:
       TZ: "${TZ}"
       DRIVE_DISK: "${DRIVE_DISK}"
       DB_CONNECTION: "${DB_CONNECTION}"
-      PG_HOST: host.docker.internal
+      PG_HOST: "${PG_HOST}"
       PG_PORT: "${PG_PORT}"
       PG_USER: "${PG_USER}"
       PG_PASSWORD: "${PG_PASSWORD}"
       PG_DB_NAME: "${PG_DB_NAME}"
-
-    volumes:
-      - uploads:/home/node/app/public/uploads
 
 volumes:
   uploads:

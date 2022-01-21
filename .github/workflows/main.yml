@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./Dockerfile
+          file: ./prod.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.event.repository.name }}:latest
@@ -45,10 +45,10 @@ jobs:
         uses: fifsky/ssh-action@master   
         with:   
           command: |
-            rm docker-compose.yml
-            wget https://raw.githubusercontent.com/motephyr/happiness/master/docker-compose.yml
-            docker-compose pull
-            docker-compose up -d
+            rm prod.docker-compose.yml
+            wget https://raw.githubusercontent.com/motephyr/happiness/master/prod.docker-compose.yml
+            docker-compose -f prod.docker-compose.yml pull
+            docker-compose -f prod.docker-compose.yml up -d
             docker image prune -af
           host: ${{ secrets.HOST }}   
           user: ${{ secrets.USER }}   

@@ -3,4 +3,5 @@ node_modules
 .git
 *.log
 .env
-Dockerfile
+*Dockerfile
+*docker-compose.yml

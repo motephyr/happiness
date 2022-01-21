@@ -151,6 +151,7 @@ Encore.configureDevServerOptions((options) => {
     directory: path.join(__dirname, './resources/views'),
     watch: true,
   })
+  options.host = '0.0.0.0'
 })
 
 /*
